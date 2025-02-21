@@ -3,5 +3,6 @@ is able to fetch the  server list as well as every single server
 
 
 # Usage
-npm i
+npm i 
+
 node .\fetch.js
