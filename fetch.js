@@ -2,7 +2,7 @@
 // async function start ()
 // 
 
-
+var fs = require('fs');
 var $protobuf = require("protobufjs");
 var $Reader = $protobuf.Reader, $Writer = $protobuf.Writer, $util = $protobuf.util;
 
@@ -234,7 +234,7 @@ const { body } = await fetch("https://servers-frontend.fivem.net/api/servers/str
 async function getSingle(srv) {
 	return await fetchingSingle(srv.EndPoint)
 }
-
+const mydata = []
 const servers = [];
 
 const frameReader = new FrameReader(
@@ -250,18 +250,26 @@ const frameReader = new FrameReader(
 	  console.log('got full server list now sorting')
 	  for (let a of servers){
 		  const s = await getSingle(a)
-		  
+		  mydata.push({server: a, data: s})
 		  // add resources filerts or diffrent single server filters
-		  if (s.resources && s.resources.filter(x => x.includes('multicharacter'))){
-			  console.log(s.resources)
-			  return;
+		  if (s.resources && s.resources.filter(x => x.includes('um-multicharacter'))){
+			  console.log(s)
+			  
 		  }
+		  else if (s.response){
+			  console.log(s.response)
+			  break;
+		  }
+		  else
+			console.log('not matching filter')
 		  
 		  
-		  await new Promise(resolve => setTimeout(resolve, 1000));
+		  await new Promise(resolve => setTimeout(resolve, 5500));
 	  }
 		//
 		//
+		
+		fs.writeFileSync('jsonfile.json', JSON.stringify(mydata));
   }
 )
 
