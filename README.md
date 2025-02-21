@@ -3,4 +3,4 @@ is able to fetch the  server list as well as every single server
 
 
 # Usage
-node .\fetch.js
+npm i && node .\fetch.js
